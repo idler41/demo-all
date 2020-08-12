@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "actId": 0,
+    "groupId": 10,
+    "taskName": "邀请好友完成首单-cacheTest",
+    "taskType": 6,
+    "targetValue": 1,
+    "repeatFlag": 1,
+    "rewardType": 10,
+    "rewardValue": "100",
+    "taskOrder": 0,
+    "taskStatus": 1,
+    "deleteFlag": 0,
+    "createTime": 1593337269000,
+    "updateTime": 1594119440000
+  },
+
+  {
+    "id": 3,
+    "actId": 0,
+    "groupId": 10,
+    "taskName": "开播时长任务",
+    "taskType": 4,
+    "targetValue": 20,
+    "repeatFlag": 0,
+    "rewardType": 0,
+    "rewardValue": "0",
+    "taskOrder": 0,
+    "taskStatus": 1,
+    "deleteFlag": 0,
+    "createTime": 1593349168000,
+    "updateTime": 1594015272000
+  }
+]

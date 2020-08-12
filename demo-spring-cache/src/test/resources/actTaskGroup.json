@@ -1,0 +1,13 @@
+{
+  "id": 10,
+  "actId": 0,
+  "groupName": "王牌主播",
+  "groupType": 1,
+  "rewardType": 11,
+  "rewardValue": 4,
+  "extendJson": "0",
+  "groupStatus": 1,
+  "deleteFlag": 0,
+  "createTime": 1593419993000,
+  "updateTime": 1594001497000
+}

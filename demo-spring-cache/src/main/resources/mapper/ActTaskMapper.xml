@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lfx.demo.mapper.ActTaskMapper">
+    <resultMap id="BaseResultMap" type="com.lfx.demo.entity.ActTask">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="act_id" jdbcType="INTEGER" property="actId" />
+        <result column="group_id" jdbcType="INTEGER" property="groupId" />
+        <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+        <result column="task_type" jdbcType="SMALLINT" property="taskType" />
+        <result column="target_value" jdbcType="INTEGER" property="targetValue" />
+        <result column="repeat_flag" jdbcType="TINYINT" property="repeatFlag" />
+        <result column="reward_type" jdbcType="SMALLINT" property="rewardType" />
+        <result column="reward_value" jdbcType="VARCHAR" property="rewardValue" />
+        <result column="task_order" jdbcType="INTEGER" property="taskOrder" />
+        <result column="task_status" jdbcType="TINYINT" property="taskStatus" />
+        <result column="delete_flag" jdbcType="TINYINT" property="deleteFlag" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, act_id, group_id, task_name, task_type, target_value, repeat_flag, reward_type, 
+        reward_value, task_order, task_status, delete_flag, create_time, update_time
+    </sql>
+</mapper>
