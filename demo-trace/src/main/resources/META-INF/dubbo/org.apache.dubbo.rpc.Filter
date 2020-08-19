@@ -1,0 +1,2 @@
+providerTraceFilter=com.lfx.demo.filter.ProviderTraceFilter
+consumerFilter=com.lfx.demo.filter.ConsumerTraceFilter
