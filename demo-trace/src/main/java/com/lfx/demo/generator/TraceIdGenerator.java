@@ -1,5 +1,6 @@
 package com.lfx.demo.generator;
 
+import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
@@ -101,7 +102,7 @@ public class TraceIdGenerator {
         if (P_ID_CACHE != null) {
             return P_ID_CACHE;
         }
-        String processName = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
+        String processName = ManagementFactory.getRuntimeMXBean().getName();
 
         if (isBlank(processName)) {
             return EMPTY_STRING;
