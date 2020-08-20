@@ -29,8 +29,8 @@ public class ConsumerTraceFilter extends AbstractTraceFilter {
         if (StringUtil.isBlank(traceId)) {
             traceId = generateTraceId(invoker, invocation);
             RpcContext.getContext().setAttachment(traceIdKey, traceId);
+            MDC.put(traceIdKey, traceId);
         }
-        MDC.put(traceIdKey, traceId);
     }
 
     @Override
