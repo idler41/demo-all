@@ -37,13 +37,16 @@ public class TraceIdGenerator {
     }
 
     public static void main(String[] args) {
+        System.out.println(System.currentTimeMillis());
         System.out.println(getInetAddress());
         System.out.println(IP_16);
         System.out.println(generate());
+        System.out.println(generate().length());
+        System.out.println(Integer.toHexString(1));
     }
 
     private static String getTraceId(String ip, long timestamp, int nextId) {
-        return ip + timestamp + nextId + getPID();
+        return timestamp + nextId + getPID() + ip;
     }
 
     private static String getIP_16(String ip) {

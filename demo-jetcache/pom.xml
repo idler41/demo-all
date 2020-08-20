@@ -11,9 +11,6 @@
 
     <artifactId>demo-jetcache</artifactId>
 
-    <name>demo-jetcache</name>
-
-
     <dependencies>
         <dependency>
             <groupId>com.baomidou</groupId>

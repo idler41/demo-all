@@ -13,6 +13,7 @@
         <module>demo-jetcache</module>
         <module>demo-trace</module>
         <module>demo-hash</module>
+        <module>id-generator</module>
     </modules>
 
     <name>demo-all</name>
