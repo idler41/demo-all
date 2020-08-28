@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lfx.demo.constant.CacheConstants;
 import com.lfx.demo.entity.ActTask;
 import com.lfx.demo.mapper.ActTaskMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -22,6 +23,9 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class ActTaskManager extends ServiceImpl<ActTaskMapper, ActTask> {
+
+    @Autowired
+    private ActTaskManager actTaskManager;
 
     @Cached(name = CacheConstants.TaskCache.CACHE_NAME, key = "#id", cacheType = CacheType.BOTH, expire = 7200, localExpire = 5)
     @CacheRefresh(refresh = 1, stopRefreshAfterLastAccess = 24, timeUnit = TimeUnit.HOURS)

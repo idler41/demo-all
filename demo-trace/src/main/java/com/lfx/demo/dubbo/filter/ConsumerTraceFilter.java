@@ -1,4 +1,4 @@
-package com.lfx.demo.filter;
+package com.lfx.demo.dubbo.filter;
 
 import com.lfx.demo.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +9,8 @@ import org.apache.dubbo.rpc.Result;
 import org.apache.dubbo.rpc.RpcContext;
 import org.slf4j.MDC;
 
+import static com.lfx.demo.constants.TraceConstants.TEMP_TRACE_KEY;
+import static com.lfx.demo.constants.TraceConstants.TRACE_KEY;
 import static org.apache.dubbo.common.constants.CommonConstants.CONSUMER;
 
 /**
@@ -20,17 +22,22 @@ import static org.apache.dubbo.common.constants.CommonConstants.CONSUMER;
 public class ConsumerTraceFilter extends AbstractTraceFilter {
     @Override
     protected void traceCompleteInvoke(Invoker<?> invoker, Invocation invocation) {
-        MDC.remove(traceIdKey);
+        if (!StringUtil.isBlank(MDC.get(TEMP_TRACE_KEY))) {
+            MDC.remove(TRACE_KEY);
+            MDC.remove(TEMP_TRACE_KEY);
+        }
     }
 
     @Override
     protected void traceBeforeInvoke(Invoker<?> invoker, Invocation invocation) {
-        String traceId = MDC.get(traceIdKey);
+        String traceId = MDC.get(TRACE_KEY);
         if (StringUtil.isBlank(traceId)) {
+            // 一般不应该进入该方法
             traceId = generateTraceId(invoker, invocation);
-            RpcContext.getContext().setAttachment(traceIdKey, traceId);
-            MDC.put(traceIdKey, traceId);
+            MDC.put(TRACE_KEY, traceId);
+            MDC.put(TEMP_TRACE_KEY, traceId);
         }
+        RpcContext.getContext().setAttachment(TRACE_KEY, traceId);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.lfx.demo.filter;
+package com.lfx.demo.dubbo.filter;
 
 import com.lfx.demo.generator.TraceIdGenerator;
 import com.lfx.demo.util.StringUtil;
@@ -17,9 +17,6 @@ import org.apache.dubbo.rpc.RpcException;
  */
 @Slf4j
 public abstract class AbstractTraceFilter implements Filter {
-
-    protected final String traceIdKey = "demoTraceId";
-
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
         if (isExcludeTrace(invoker)) {

@@ -1,2 +1,2 @@
-providerTraceFilter=com.lfx.demo.filter.ProviderTraceFilter
-consumerFilter=com.lfx.demo.filter.ConsumerTraceFilter
+providerTraceFilter=com.lfx.demo.dubbo.filter.ProviderTraceFilter
+consumerFilter=com.lfx.demo.dubbo.filter.ConsumerTraceFilter
