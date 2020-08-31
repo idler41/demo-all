@@ -1,2 +1,3 @@
 providerTraceFilter=com.lfx.demo.dubbo.filter.ProviderTraceFilter
 consumerFilter=com.lfx.demo.dubbo.filter.ConsumerTraceFilter
+providerArgsLogFilter=com.lfx.demo.dubbo.filter.ProviderArgsLogFilter

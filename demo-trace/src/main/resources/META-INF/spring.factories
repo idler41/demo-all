@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.lfx.demo.spring.config.TraceInterceptorAutoConfig
+org.springframework.context.ApplicationListener=\
+com.lfx.demo.spring.listener.LogSpringBeanApplicationListener

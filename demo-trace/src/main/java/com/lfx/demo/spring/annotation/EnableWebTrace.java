@@ -14,6 +14,6 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Import(TraceInterceptorAutoConfig.class)
+@Import({TraceInterceptorAutoConfig.class})
 public @interface EnableWebTrace {
 }

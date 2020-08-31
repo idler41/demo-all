@@ -32,7 +32,6 @@ public class ProviderTraceFilter extends AbstractTraceFilter {
             RpcContext.getContext().setAttachment(TRACE_KEY, traceId);
         }
         MDC.put(TRACE_KEY, traceId);
-        log.info("service:{},method:{},arguments:{}", invoker.getInterface().getSimpleName(), invocation.getMethodName(), invocation.getArguments());
     }
 
     @Override

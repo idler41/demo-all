@@ -1,5 +1,6 @@
 package com.lfx.demo.dubbo.filter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lfx.demo.generator.TraceIdGenerator;
 import com.lfx.demo.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
