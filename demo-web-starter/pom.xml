@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo-weblog-starter</artifactId>
+    <artifactId>demo-web-starter</artifactId>
 
     <dependencies>
         <dependency>

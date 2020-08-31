@@ -14,7 +14,7 @@
         <module>demo-trace</module>
         <module>demo-hash</module>
         <module>demo-uid</module>
-        <module>demo-token-starter</module>
+        <module>demo-web-starter</module>
     </modules>
 
     <name>demo-all</name>

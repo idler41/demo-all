@@ -21,12 +21,6 @@ import java.io.IOException;
 @Slf4j
 public class TokenFilter implements Filter {
 
-    private final ObjectMapper objectMapper;
-
-    public TokenFilter(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
-
     @Override
     public void destroy() {
         log.info("销毁 TokenFilter");
@@ -41,7 +35,9 @@ public class TokenFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String token = request.getHeader("token");
-        log.info("path={},token={}", request.getServletPath(), token);
+        if (log.isDebugEnabled()) {
+            log.debug("path:{},token:{}", request.getServletPath(), token);
+        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

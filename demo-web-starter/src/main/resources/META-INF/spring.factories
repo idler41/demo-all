@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.lfx.demo.weblog.config.TokenFilterAutoConfig, \
+  com.lfx.demo.weblog.config.WebMonitorAutoConfig
