@@ -20,8 +20,11 @@ import static com.lfx.demo.constants.TraceConstants.TRACE_KEY;
 public class TraceInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (handler instanceof HandlerMethod) {
-            MDC.put(TRACE_KEY, TraceIdGenerator.generate());
+        // 请求转发后，traceId会重置
+        if (handler instanceof HandlerMethod && needGenerate(request)) {
+            String traceId = TraceIdGenerator.generate();
+            request.setAttribute(TRACE_KEY, traceId);
+            MDC.put(TRACE_KEY, traceId);
         }
         return true;
     }
@@ -31,5 +34,11 @@ public class TraceInterceptor extends HandlerInterceptorAdapter {
         if (handler instanceof HandlerMethod) {
             MDC.remove(TRACE_KEY);
         }
+    }
+
+
+    private boolean needGenerate(HttpServletRequest request) {
+        // 新的请求或者请求转发，不需要重新生成traceId
+        return request.getAttribute(TRACE_KEY) == null || !request.getAttribute(TRACE_KEY).equals(MDC.get(TRACE_KEY));
     }
 }
