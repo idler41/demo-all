@@ -16,7 +16,7 @@ import org.springframework.core.Ordered;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnClass(TokenFilter.class)
-public class TokenFilterAutoConfig {
+public class WebTokenAutoConfig {
 
     @ConditionalOnMissingBean(TokenFilter.class)
     @Bean
@@ -25,7 +25,6 @@ public class TokenFilterAutoConfig {
         FilterRegistrationBean<TokenFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new TokenFilter());
         registrationBean.addUrlPatterns("/*");
-        registrationBean.setName("tokenFilter");
         registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return registrationBean;
     }

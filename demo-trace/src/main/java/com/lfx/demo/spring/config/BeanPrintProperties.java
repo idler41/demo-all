@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
         prefix = "app.bean"
 )
 @Data
-public class PrintBeanProperties {
+public class BeanPrintProperties {
 
     private boolean printBean = true;
 

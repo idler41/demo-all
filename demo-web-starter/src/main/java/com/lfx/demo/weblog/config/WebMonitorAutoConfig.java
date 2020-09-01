@@ -4,6 +4,7 @@ import com.lfx.demo.weblog.interceptor.MonitorInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,6 +18,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMonitorAutoConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MonitorInterceptor()).order(0).addPathPatterns("/**");
+        registry.addInterceptor(new MonitorInterceptor()).order(Ordered.LOWEST_PRECEDENCE).addPathPatterns("/**");
     }
 }

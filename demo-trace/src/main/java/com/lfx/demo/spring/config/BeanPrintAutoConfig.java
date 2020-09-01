@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020-09-01 10:52:14
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties(PrintBeanProperties.class)
-public class PrintBeanAutoConfig {
+@EnableConfigurationProperties(BeanPrintProperties.class)
+public class BeanPrintAutoConfig {
 }

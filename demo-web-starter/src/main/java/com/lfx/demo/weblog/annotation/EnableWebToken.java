@@ -1,6 +1,6 @@
 package com.lfx.demo.weblog.annotation;
 
-import com.lfx.demo.weblog.config.TokenFilterAutoConfig;
+import com.lfx.demo.weblog.config.WebTokenAutoConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -14,6 +14,6 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Import(TokenFilterAutoConfig.class)
+@Import(WebTokenAutoConfig.class)
 public @interface EnableWebToken {
 }

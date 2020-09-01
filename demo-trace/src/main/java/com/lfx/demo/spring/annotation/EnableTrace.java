@@ -1,6 +1,6 @@
 package com.lfx.demo.spring.annotation;
 
-import com.lfx.demo.spring.config.TraceInterceptorAutoConfig;
+import com.lfx.demo.spring.config.TraceAutoConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
@@ -14,6 +14,6 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Import({TraceInterceptorAutoConfig.class})
-public @interface EnableWebTrace {
+@Import({TraceAutoConfig.class})
+public @interface EnableTrace {
 }
