@@ -1,6 +1,5 @@
-package com.lfx.demo.weblog.filter;
+package com.lfx.demo.web.filter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.Filter;

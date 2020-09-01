@@ -1,6 +1,6 @@
-package com.lfx.demo.weblog.annotation;
+package com.lfx.demo.web.annotation;
 
-import com.lfx.demo.weblog.config.WebTokenAutoConfig;
+import com.lfx.demo.web.config.WebTokenAutoConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;

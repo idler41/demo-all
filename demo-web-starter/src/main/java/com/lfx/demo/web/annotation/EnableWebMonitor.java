@@ -1,4 +1,7 @@
-package com.lfx.demo.weblog.annotation;
+package com.lfx.demo.web.annotation;
+
+import com.lfx.demo.web.config.WebMonitorAutoConfig;
+import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,11 +10,10 @@ import java.lang.annotation.Target;
 
 /**
  * @author <a href="mailto:linfx@dydf.cn">linfuxin</a>
- * @date 2020-08-31 15:26:46
+ * @date 2020-08-28 11:30:15
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@EnableWebMonitor
-@EnableWebToken
-public @interface EnableWebAll {
+@Import(WebMonitorAutoConfig.class)
+public @interface EnableWebMonitor {
 }

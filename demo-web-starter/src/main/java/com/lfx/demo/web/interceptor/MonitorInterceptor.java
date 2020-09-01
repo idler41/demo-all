@@ -1,4 +1,4 @@
-package com.lfx.demo.weblog.interceptor;
+package com.lfx.demo.web.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StopWatch;

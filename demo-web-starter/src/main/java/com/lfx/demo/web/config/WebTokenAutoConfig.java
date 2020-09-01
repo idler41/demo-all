@@ -1,6 +1,6 @@
-package com.lfx.demo.weblog.config;
+package com.lfx.demo.web.config;
 
-import com.lfx.demo.weblog.filter.TokenFilter;
+import com.lfx.demo.web.filter.TokenFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
