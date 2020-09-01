@@ -1,5 +1,6 @@
 package com.lfx.demo.spring.listener;
 
+import com.lfx.demo.spring.config.PrintBeanProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationEvent;
@@ -27,7 +28,7 @@ public class LogSpringBeanApplicationListener implements SmartApplicationListene
     @Override
     public void onApplicationEvent(ApplicationEvent applicationEvent) {
         ApplicationStartedEvent event = (ApplicationStartedEvent) applicationEvent;
-        if (Boolean.parseBoolean(event.getApplicationContext().getEnvironment().getProperty("app.config.print.bean"))) {
+        if (event.getApplicationContext().getBean(PrintBeanProperties.class).isPrintBean()) {
             logSpringBean(event);
         }
     }
@@ -37,10 +38,8 @@ public class LogSpringBeanApplicationListener implements SmartApplicationListene
         allBeanNameStr.append("----------------- spring beans start -----------------")
                 .append(System.lineSeparator());
         String[] beanNames = event.getApplicationContext().getBeanDefinitionNames();
-        allBeanNameStr.append("beans amount: ").append(beanNames.length)
-                .append(System.lineSeparator());
         Arrays.sort(beanNames);
-        boolean printBeanImpl = Boolean.parseBoolean(event.getApplicationContext().getEnvironment().getProperty("app.config.print.bean-impl"));
+        boolean printBeanImpl = event.getApplicationContext().getBean(PrintBeanProperties.class).isPrintBeanImpl();
         for (String name : beanNames) {
             allBeanNameStr.append(name);
             if (printBeanImpl) {
@@ -48,6 +47,8 @@ public class LogSpringBeanApplicationListener implements SmartApplicationListene
             }
             allBeanNameStr.append(System.lineSeparator());
         }
+        allBeanNameStr.append("beans amount: ").append(beanNames.length)
+                .append(System.lineSeparator());
         allBeanNameStr.append("----------------- spring beans end -----------------");
         log.info(allBeanNameStr.toString());
     }

@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "app.bean.print-bean",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.lfx.demo.spring.config.PrintBeanProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "app.bean.print-bean-impl",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.lfx.demo.spring.config.PrintBeanProperties",
+      "defaultValue": false
+    }
+  ]
+}
