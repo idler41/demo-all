@@ -20,7 +20,7 @@ import static com.lfx.demo.constants.TraceConstants.TRACE_KEY;
 public class TraceInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (handler instanceof HandlerMethod && MDC.get(TRACE_KEY) == null) {
+        if (handler instanceof HandlerMethod) {
             MDC.put(TRACE_KEY, TraceIdGenerator.generate());
         }
         return true;

@@ -2,4 +2,4 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.lfx.demo.spring.config.TraceAutoConfig \
   com.lfx.demo.spring.config.BeanPrintAutoConfig
 org.springframework.context.ApplicationListener=\
-com.lfx.demo.spring.listener.BeanPrintApplicationListener
+com.lfx.demo.spring.listener.ApplicationStartedListener

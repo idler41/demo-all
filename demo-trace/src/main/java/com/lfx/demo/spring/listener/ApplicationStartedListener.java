@@ -13,7 +13,7 @@ import java.util.Arrays;
  * @date 2020-08-31 18:07:22
  */
 @Slf4j
-public class BeanPrintApplicationListener implements SmartApplicationListener {
+public class ApplicationStartedListener implements SmartApplicationListener {
 
     @Override
     public int getOrder() {
