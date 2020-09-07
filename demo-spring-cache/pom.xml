@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo-cache</artifactId>
+    <artifactId>demo-spring-cache</artifactId>
 
     <dependencies>
         <dependency>
