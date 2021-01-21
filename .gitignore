@@ -23,4 +23,5 @@ dependency-reduced-pom.xml
 /out/
 *.versionsBackup
 **/application-db.properties
+com/**
 

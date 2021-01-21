@@ -16,6 +16,7 @@
         <module>demo-uid</module>
         <module>demo-web-starter</module>
         <module>demo-rocketmq</module>
+        <module>demo-proxy</module>
     </modules>
 
     <name>demo-all</name>
