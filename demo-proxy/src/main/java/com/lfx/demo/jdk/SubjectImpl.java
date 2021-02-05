@@ -6,7 +6,8 @@ package com.lfx.demo.jdk;
  */
 public class SubjectImpl implements Subject{
     @Override
-    public void sayHello() {
+    public Object sayHello() {
         System.out.println("hello world");
+        return "impl";
     }
 }

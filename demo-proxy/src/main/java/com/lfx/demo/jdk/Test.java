@@ -20,7 +20,13 @@ public class Test {
                 subject.getClass().getInterfaces(),
                 new ProxyInvocationHandler(subject)
         );
-        subject.sayHello();
-        proxy.sayHello();
+        Subject proxy2 = (Subject) Proxy.newProxyInstance(
+                Test.class.getClassLoader(),
+                new Class[]{Subject.class},
+                new ProxyInvocationHandler(subject)
+        );
+        System.out.println("proxy result=" + proxy.sayHello());
+        System.out.println("no impl proxy result=" + proxy2.sayHello());
+        System.out.println("subject result=" + subject.sayHello());
     }
 }
