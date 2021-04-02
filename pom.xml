@@ -17,6 +17,7 @@
         <module>demo-web-starter</module>
         <module>demo-rocketmq</module>
         <module>demo-proxy</module>
+        <module>demo-opentracing</module>
     </modules>
 
     <name>demo-all</name>
