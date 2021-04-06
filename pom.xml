@@ -18,6 +18,7 @@
         <module>demo-rocketmq</module>
         <module>demo-proxy</module>
         <module>demo-opentracing</module>
+        <module>demo-dynamic-datasouce</module>
     </modules>
 
     <name>demo-all</name>
@@ -32,6 +33,8 @@
         <servlet-api.version>4.0.1</servlet-api.version>
 
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
+        <dynamic-datasource-spring-boot.version>2.3.0</dynamic-datasource-spring-boot.version>
+
         <sharding-sphere.version>4.1.0</sharding-sphere.version>
         <guava.version>29.0-jre</guava.version>
 
@@ -150,6 +153,13 @@
                 <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
                 <version>${sharding-sphere.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource-spring-boot.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.projectlombok</groupId>
