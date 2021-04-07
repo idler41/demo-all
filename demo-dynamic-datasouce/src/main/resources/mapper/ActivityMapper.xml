@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lfx.mall.marketing.persistence.dao.ActivityMapper">
+    <resultMap id="BaseResultMap" type="com.lfx.demo.entity.Activity">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+        <result column="act_status" jdbcType="TINYINT" property="actStatus" />
+        <result column="act_type" jdbcType="SMALLINT" property="actType" />
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="preheat_time" jdbcType="INTEGER" property="preheatTime" />
+        <result column="is_delete" jdbcType="BIT" property="isDelete" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, introduction, act_status, act_type, start_time, end_time, preheat_time, 
+        is_delete, create_time, update_time
+    </sql>
+</mapper>
