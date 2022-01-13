@@ -25,3 +25,5 @@ dependency-reduced-pom.xml
 **/application-db.properties
 com/**
 
+
+**/application-mqtt.properties

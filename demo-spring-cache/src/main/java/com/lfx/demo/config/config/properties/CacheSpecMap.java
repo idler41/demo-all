@@ -1,4 +1,4 @@
-package com.lfx.demo.config.properties;
+package com.lfx.demo.config.config.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
