@@ -19,6 +19,7 @@
         <module>demo-proxy</module>
         <module>demo-opentracing</module>
         <module>demo-dynamic-datasouce</module>
+        <module>demo-mahout</module>
     </modules>
 
     <name>demo-all</name>
@@ -44,6 +45,9 @@
 
         <ons.version>1.8.2.Final</ons.version>
         <jetcache.version>2.5.14</jetcache.version>
+
+        <mahout.version>0.9</mahout.version>
+        <mahout-collections.version>1.0</mahout-collections.version>
 
         <slf4j.version>1.7.30</slf4j.version>
         <mapstruct.version>1.3.0.Final</mapstruct.version>
@@ -190,6 +194,23 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet-api.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.mahout</groupId>
+                <artifactId>mahout-core</artifactId>
+                <version>${mahout.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.mahout</groupId>
+                <artifactId>mahout-math</artifactId>
+                <version>${mahout.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.mahout</groupId>
+                <artifactId>mahout-collections</artifactId>
+                <version>${mahout-collections.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
