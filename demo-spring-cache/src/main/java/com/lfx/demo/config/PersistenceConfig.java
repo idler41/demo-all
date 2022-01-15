@@ -3,7 +3,7 @@ package com.lfx.demo.config;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.lfx.demo.cache.FlexibleCaffeineCacheManager;
-import com.lfx.demo.config.properties.CacheSpecMap;
+import com.lfx.demo.config.config.properties.CacheSpecMap;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

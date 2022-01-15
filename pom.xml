@@ -19,6 +19,7 @@
         <module>demo-proxy</module>
         <module>demo-opentracing</module>
         <module>demo-dynamic-datasouce</module>
+        <module>demo-mqtt</module>
         <module>demo-mahout</module>
     </modules>
 
