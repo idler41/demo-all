@@ -1,31 +1,23 @@
 package com.lfx.demo.config.config;
 
 import com.lfx.demo.config.config.properties.MqttProperties;
-import com.lfx.demo.config.handler.DefaultMessageHandler;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.channel.ExecutorChannel;
 import org.springframework.integration.config.EnableIntegration;
-import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
-import org.springframework.messaging.MessageHeaders;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -61,17 +53,17 @@ public class MqttConfig {
             @Override
             public Thread newThread(Runnable r) {
                 Thread thread = new Thread(r);
-                thread.setName("mqttConsumerThread-" + tag.incrementAndGet());
+                thread.setName("mqttConsumer-" + tag.incrementAndGet());
                 return thread;
             }
         };
 
         ThreadPoolExecutor executorService = new ThreadPoolExecutor(
-                properties.getConsumer().getThreadCorePoolSize(),
-                properties.getConsumer().getThreadMaxPoolSize(),
-                properties.getConsumer().getThreadKeepAliveTime(),
+                properties.getSubscriber().getThreadCorePoolSize(),
+                properties.getSubscriber().getThreadMaxPoolSize(),
+                properties.getSubscriber().getThreadKeepAliveTime(),
                 TimeUnit.SECONDS,
-                new LinkedBlockingDeque<>(properties.getConsumer().getThreadWorkQueueSize()),
+                new LinkedBlockingDeque<>(properties.getSubscriber().getThreadWorkQueueSize()),
                 threadFactory);
         return new ExecutorChannel(executorService);
     }
@@ -79,10 +71,10 @@ public class MqttConfig {
     @Bean
     public MqttPahoMessageDrivenChannelAdapter inbound() {
         MqttPahoMessageDrivenChannelAdapter adapter =
-                new MqttPahoMessageDrivenChannelAdapter(properties.getConsumer().getClientId(), clientFactory());
+                new MqttPahoMessageDrivenChannelAdapter(properties.getSubscriber().getClientId(), clientFactory());
         adapter.setOutputChannel(inputChannel());
-        properties.getConsumer().getTopic().forEach(item -> adapter.addTopic(item.getName(), item.getQos()));
-        adapter.setManualAcks(properties.getConsumer().isManualAck());
+        properties.getSubscriber().getTopics().forEach(item -> adapter.addTopic(item.getName(), item.getQos()));
+        adapter.setManualAcks(properties.getSubscriber().isManualAck());
         return adapter;
     }
 
@@ -95,9 +87,9 @@ public class MqttConfig {
     @ServiceActivator(inputChannel = "outputChannel")
     public MessageHandler outbound() {
         MqttPahoMessageHandler messageHandler =
-                new MqttPahoMessageHandler(properties.getProducer().getClientId(), clientFactory());
-        messageHandler.setAsync(properties.getProducer().isAsync());
-        messageHandler.setAsyncEvents(properties.getProducer().isAsyncEvent());
+                new MqttPahoMessageHandler(properties.getPublisher().getClientId(), clientFactory());
+        messageHandler.setAsync(properties.getPublisher().isAsync());
+        messageHandler.setAsyncEvents(properties.getPublisher().isAsyncEvent());
         return messageHandler;
     }
 
