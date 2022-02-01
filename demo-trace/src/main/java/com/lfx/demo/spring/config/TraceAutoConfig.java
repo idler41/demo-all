@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author <a href="mailto:linfx@dydf.cn">linfuxin</a>
  * @date 2020-08-28 15:19:54
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnClass(TraceInterceptor.class)
 public class TraceAutoConfig implements WebMvcConfigurer {

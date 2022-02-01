@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lfx.demo.mapper.SysDictTypeMapper">
+    <resultMap id="BaseResultMap" type="com.lfx.demo.domain.SysDictType">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="dict_label" jdbcType="VARCHAR" property="dictLabel"/>
+        <result column="state" jdbcType="BIT" property="state"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="delete_flag" jdbcType="BIT" property="deleteFlag"/>
+        <result column="create_by" jdbcType="INTEGER" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="INTEGER" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code, dict_label, state, remark, delete_flag, create_by, create_time, update_by, update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.lfx.demo.domain.SysDictType">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into 
+            t_sys_dict_type 
+        (
+            code, dict_label, state, remark, delete_flag, create_by, create_time, update_by, update_time    
+        )
+        values 
+        (
+            #{code,jdbcType=VARCHAR}, #{dict_label,jdbcType=VARCHAR}, #{state,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, #{delete_flag,jdbcType=BIT},     
+            #{create_by,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP}, #{update_by,jdbcType=INTEGER}, #{update_time,jdbcType=TIMESTAMP}    
+        )
+    </insert>
+
+    <update id="updateById" parameterType="com.lfx.demo.domain.SysDictType">
+        update 
+            t_sys_dict_type
+        set
+            code = #{code,jdbcType=VARCHAR},
+            dict_label = #{dict_label,jdbcType=VARCHAR},
+            state = #{state,jdbcType=BIT},
+            remark = #{remark,jdbcType=VARCHAR},
+            delete_flag = #{delete_flag,jdbcType=BIT},
+            create_by = #{create_by,jdbcType=INTEGER},
+            create_time = #{create_time,jdbcType=TIMESTAMP},
+            update_by = #{update_by,jdbcType=INTEGER},
+            update_time = #{update_time,jdbcType=TIMESTAMP}
+        where 
+            id = #{id,jdbcType=INTEGER}
+    </update>    
+
+    <update id="updateSelectiveById" parameterType="com.lfx.demo.domain.SysDictType">
+        update 
+            t_sys_dict_type
+        <set>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR}
+            </if>  
+            <if test="dictLabel != null">
+                dict_label = #{dict_label,jdbcType=VARCHAR}
+            </if>  
+            <if test="state != null">
+                state = #{state,jdbcType=BIT}
+            </if>  
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR}
+            </if>  
+            <if test="deleteFlag != null">
+                delete_flag = #{delete_flag,jdbcType=BIT}
+            </if>  
+            <if test="createBy != null">
+                create_by = #{create_by,jdbcType=INTEGER}
+            </if>  
+            <if test="createTime != null">
+                create_time = #{create_time,jdbcType=TIMESTAMP}
+            </if>  
+            <if test="updateBy != null">
+                update_by = #{update_by,jdbcType=INTEGER}
+            </if>  
+            <if test="updateTime != null">
+                update_time = #{update_time,jdbcType=TIMESTAMP}
+            </if>  
+        </set>
+        where
+            id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByEntity" parameterType="com.lfx.demo.domain.SysDictType">
+        select 
+            <include refid="Base_Column_List" />
+        from
+            t_sys_dict_type
+        <where>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR}
+            </if>  
+            <if test="dictLabel != null">
+                dict_label = #{dict_label,jdbcType=VARCHAR}
+            </if>  
+            <if test="state != null">
+                state = #{state,jdbcType=BIT}
+            </if>  
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR}
+            </if>  
+            <if test="deleteFlag != null">
+                delete_flag = #{delete_flag,jdbcType=BIT}
+            </if>  
+            <if test="createBy != null">
+                create_by = #{create_by,jdbcType=INTEGER}
+            </if>  
+            <if test="createTime != null">
+                create_time = #{create_time,jdbcType=TIMESTAMP}
+            </if>  
+            <if test="updateBy != null">
+                update_by = #{update_by,jdbcType=INTEGER}
+            </if>  
+            <if test="updateTime != null">
+                update_time = #{update_time,jdbcType=TIMESTAMP}
+            </if>  
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from t_sys_dict_type where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByIdList">
+        delete from
+            t_sys_dict_type
+        where
+            id in
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectByIdList" resultMap="BaseResultMap">
+        select 
+            <include refid="Base_Column_List" />
+        from
+            t_sys_dict_type
+        where
+            id in
+        <foreach item="id" collection="idList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select 
+            <include refid="Base_Column_List" />
+        from
+            t_sys_dict_type
+        where
+            id = #{id,jdbcType=INTEGER}
+    </select>        
+</mapper>
