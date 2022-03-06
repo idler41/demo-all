@@ -22,6 +22,7 @@
         <module>demo-mqtt</module>
         <module>demo-mahout</module>
         <module>demo-mybatis</module>
+        <module>demo-rabbitmq</module>
     </modules>
 
     <name>demo-all</name>
