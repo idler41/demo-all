@@ -23,6 +23,7 @@
         <module>demo-mahout</module>
         <module>demo-mybatis</module>
         <module>demo-rabbitmq</module>
+        <module>demo-mapstruct</module>
     </modules>
 
     <name>demo-all</name>
