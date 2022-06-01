@@ -1,4 +1,4 @@
-package com.lfx.demo.domain;
+package com.lfx.demo.abstracts.domain;
 
 import lombok.Data;
 

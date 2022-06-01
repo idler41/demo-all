@@ -1,7 +1,7 @@
-package com.lfx.demo.convert;
+package com.lfx.demo.extend.convert;
 
-import com.lfx.demo.domain.SysRole;
-import com.lfx.demo.domain.SysRoleExcel;
+import com.lfx.demo.extend.domain.SysRole;
+import com.lfx.demo.extend.domain.SysRoleExcel;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

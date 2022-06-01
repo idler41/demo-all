@@ -1,5 +1,6 @@
-package com.lfx.demo.domain;
+package com.lfx.demo.abstracts.saas.domain;
 
+import com.lfx.demo.abstracts.domain.BaseDomain;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
  * @author <a href="mailto:idler41@163.con">idler41</a> created on 2022-04-01 15:04:38
  */
 @Data
-public class SysRole implements Serializable {
+public class SysRoleVo implements BaseDomain, Serializable {
 
     /**
      * 主键ID

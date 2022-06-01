@@ -1,4 +1,4 @@
-package com.lfx.demo.convert.worker;
+package com.lfx.demo.extend.convert.worker;
 
 import org.mapstruct.Named;
 
