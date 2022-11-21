@@ -6,7 +6,7 @@ import com.lfx.demo.abstracts.domain.SysRoleVo;
 /**
  * @author <a href="mailto:idler41@163.con">linfuxin</a> created on 2022-11-14 11:37:16
  */
-public abstract class BaseDomainDecorator implements SysRoleConvert{
+public abstract class BaseDomainDecorator implements SysRoleConvert {
     private final SysRoleConvert delegate;
 
     public BaseDomainDecorator(SysRoleConvert delegate) {
