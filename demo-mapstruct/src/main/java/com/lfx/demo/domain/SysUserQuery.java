@@ -1,4 +1,4 @@
-package com.lfx.demo.decorator.generic;
+package com.lfx.demo.domain;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * @author <a href="mailto:idler41@163.con">idler41</a> created on 2022-11-07 10:48:41
  */
 @Data
-public class SysUser implements BaseDomain, Serializable {
+public class SysUserQuery implements Serializable {
 
     /**
      * 主键ID

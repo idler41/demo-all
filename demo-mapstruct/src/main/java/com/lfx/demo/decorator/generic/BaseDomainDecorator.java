@@ -1,5 +1,8 @@
 package com.lfx.demo.decorator.generic;
 
+import com.lfx.demo.domain.BaseConvert;
+import com.lfx.demo.domain.BaseDomain;
+
 /**
  * @author <a href="mailto:idler41@163.con">linfuxin</a> created on 2022-11-21 15:49:52
  */

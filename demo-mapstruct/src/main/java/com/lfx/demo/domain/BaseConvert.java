@@ -1,4 +1,5 @@
-package com.lfx.demo.decorator.generic;
+package com.lfx.demo.domain;
+
 
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.IterableMapping;
@@ -56,7 +57,6 @@ public interface BaseConvert<T, V, Q> {
      * @param t 实体对象
      */
     @Named("voToEntityOverride")
-    @InheritConfiguration(name = "voToEntityIgnoreId")
     void voToEntityOverride(V v, @MappingTarget T t);
 
     /**
@@ -86,5 +86,4 @@ public interface BaseConvert<T, V, Q> {
      */
     @IterableMapping(qualifiedByName = "voToEntityIgnoreId")
     List<T> voToEntityIgnoreIdList(List<V> v);
-
 }

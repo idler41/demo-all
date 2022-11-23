@@ -14,7 +14,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface WorkerConvert {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-    @Mapping(target = "updateBy", qualifiedByName = "operator")
-    @Mapping(target = "updateTime", qualifiedByName = "operateTime")
-    void updateEntity(@MappingTarget SysRole sysRole, SysRoleExcel e);
+    @Mapping(target = "updateBy", expression = "java(OperateWorker.operator())")
+    @Mapping(target = "updateTime", expression = "java(OperateWorker.operateTime())")
+    SysRole toEntity(SysRoleExcel e);
 }

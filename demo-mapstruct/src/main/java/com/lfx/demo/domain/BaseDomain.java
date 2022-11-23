@@ -1,4 +1,4 @@
-package com.lfx.demo.decorator.generic;
+package com.lfx.demo.domain;
 
 import java.time.LocalDateTime;
 
