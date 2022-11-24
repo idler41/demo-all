@@ -2,8 +2,6 @@ package com.lfx.demo.annonation;
 
 import com.lfx.demo.domain.BaseConvert;
 import com.lfx.demo.domain.BaseDomain;
-import com.lfx.demo.domain.SysUser;
-import com.lfx.demo.domain.SysUserVo;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

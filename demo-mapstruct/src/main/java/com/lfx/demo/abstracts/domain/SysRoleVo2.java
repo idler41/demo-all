@@ -1,4 +1,4 @@
-package com.lfx.demo.inherit;
+package com.lfx.demo.abstracts.domain;
 
 import com.lfx.demo.abstracts.domain.BaseDomain;
 import lombok.Data;

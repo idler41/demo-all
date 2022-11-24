@@ -1,6 +1,7 @@
 package com.lfx.demo.inherit;
 
 import com.lfx.demo.abstracts.domain.SysRole;
+import com.lfx.demo.abstracts.domain.SysRoleVo2;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
