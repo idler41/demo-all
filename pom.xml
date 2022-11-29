@@ -24,6 +24,7 @@
         <module>demo-mybatis</module>
         <module>demo-rabbitmq</module>
         <module>demo-mapstruct</module>
+        <module>demo-jackson</module>
     </modules>
 
     <name>demo-all</name>
