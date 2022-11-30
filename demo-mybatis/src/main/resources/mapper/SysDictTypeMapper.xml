@@ -156,5 +156,11 @@
             t_sys_dict_type
         where
             id = #{id,jdbcType=INTEGER}
+        <if test="orgIds != null">
+            orgId in
+            <foreach item="id" collection="orgIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
     </select>        
 </mapper>
