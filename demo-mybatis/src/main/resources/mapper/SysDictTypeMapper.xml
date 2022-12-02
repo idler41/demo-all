@@ -157,7 +157,7 @@
         where
             id = #{id,jdbcType=INTEGER}
         <if test="orgIds != null">
-            orgId in
+            and orgId in
             <foreach item="id" collection="orgIds" open="(" separator="," close=")">
                 #{id}
             </foreach>
