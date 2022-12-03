@@ -15,5 +15,3 @@ https://blog.csdn.net/qq1010830256/article/details/115617442
 
 1. 替换sql => 替换的sql模板不符合正常的sql语句或mybatis标签
 2. 自动添加参数 => 可以将参数全部转换为map，但会导致@param修饰的单个简单参数，无法传值
-
-综合考虑还是参数继承待父类，父类带上权限标识符，spring aop 注入值 更合适，参考ruoyi

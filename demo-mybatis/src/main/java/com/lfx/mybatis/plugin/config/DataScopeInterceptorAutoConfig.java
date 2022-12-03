@@ -2,6 +2,7 @@ package com.lfx.mybatis.plugin.config;
 
 import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 import com.lfx.demo.mybatis.plugin.DataScopeInterceptor;
+import com.lfx.demo.mybatis.plugin.DataScopeTestInterceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,15 @@ public class DataScopeInterceptorAutoConfig implements InitializingBean {
     @Autowired
     private List<SqlSessionFactory> sqlSessionFactoryList;
 
+    private org.apache.ibatis.session.Configuration  configuration;
+
     @Override
     public void afterPropertiesSet() throws Exception {
         for (SqlSessionFactory sqlSessionFactory : sqlSessionFactoryList) {
             org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getConfiguration();
             //自己添加
-            configuration.addInterceptor(new DataScopeInterceptor());
+//            configuration.addInterceptor(new DataScopeTestInterceptor());
+            configuration.addInterceptor(new DataScopeInterceptor(configuration));
         }
     }
 }

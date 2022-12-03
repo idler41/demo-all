@@ -38,7 +38,7 @@ public abstract class MybatisPluginBase {
                 parameterMap = (Map) args[PARAMETER_INDEX_PARAMETER];
             } else if (BeanUtils.isSimpleValueType(args[PARAMETER_INDEX_PARAMETER].getClass())) {
                 // todo 名称不对 xml获取为null
-                parameterMap.putIfAbsent("arg0", args[PARAMETER_INDEX_PARAMETER]);
+                parameterMap.putIfAbsent("id", args[PARAMETER_INDEX_PARAMETER]);
             } else {
                 // 如果是DTO类型，反射获取字段和值的map
                 Object dto = args[PARAMETER_INDEX_PARAMETER];

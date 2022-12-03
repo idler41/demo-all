@@ -149,6 +149,21 @@
         </foreach>
     </select>
 
+    <select id="get" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List" />
+        from
+            t_sys_dict_type
+        where
+            id = #{id,jdbcType=INTEGER}
+        <if test="orgIds != null">
+            and dict_label in
+            <foreach item="id" collection="orgIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
     <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select 
             <include refid="Base_Column_List" />
@@ -157,10 +172,87 @@
         where
             id = #{id,jdbcType=INTEGER}
         <if test="orgIds != null">
-            and orgId in
+            and dict_label in
             <foreach item="id" collection="orgIds" open="(" separator="," close=")">
                 #{id}
             </foreach>
         </if>
-    </select>        
+    </select>
+
+    <select id="selectByLabel" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from
+        t_sys_dict_type
+        where
+        dict_label = #{dictLabel,jdbcType=VARCHAR}
+        <if test="params.orgIds != null">
+            and dict_label in
+            <foreach item="id" collection="params.orgIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectByEntity2" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List" />
+        from
+            t_sys_dict_type
+        where
+            id = #{id,jdbcType=INTEGER}
+        <if test="orgIds != null">
+            and dict_label in
+            <foreach item="id" collection="orgIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectByLabelCollection" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List" />
+        from
+            t_sys_dict_type
+        where
+            dict_label in
+        <foreach item="label" collection="labels" open="(" separator="," close=")">
+            #{label}
+        </foreach>
+        <if test="orgIds != null">
+            and dict_label in
+            <foreach item="id" collection="orgIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="select5" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List" />
+        from
+            t_sys_dict_type
+        where
+        <if test="orgIds != null">
+            dict_label in
+            <foreach item="id" collection="orgIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="select6" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List" />
+        from
+            t_sys_dict_type
+        where
+            id = #{id,jdbcType=INTEGER}
+        <if test="orgIds != null">
+            and dict_label in
+            <foreach item="id" collection="orgIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
 </mapper>
