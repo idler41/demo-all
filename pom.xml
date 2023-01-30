@@ -24,7 +24,7 @@
         <module>demo-mybatis</module>
         <module>demo-rabbitmq</module>
         <module>demo-mapstruct</module>
-        <module>demo-jackson</module>
+        <module>demo-jackson</module><module>demo-jsqlparser</module>
     </modules>
 
     <name>demo-all</name>
@@ -54,6 +54,8 @@
         <mahout.version>0.9</mahout.version>
         <mahout-collections.version>1.0</mahout-collections.version>
 
+        <jsqlparser.version>4.0</jsqlparser.version>
+
         <slf4j.version>1.7.30</slf4j.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <lombok.version>1.18.12</lombok.version>
@@ -71,6 +73,12 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.jsqlparser</groupId>
+                <artifactId>jsqlparser</artifactId>
+                <version>${jsqlparser.version}</version>
             </dependency>
 
             <dependency>
