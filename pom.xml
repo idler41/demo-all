@@ -15,7 +15,7 @@
         <module>demo-hash</module>
         <module>demo-uid</module>
         <module>demo-web-starter</module>
-        <module>demo-rocketmq</module>
+        <module>demo-ons</module>
         <module>demo-proxy</module>
         <module>demo-opentracing</module>
         <module>demo-dynamic-datasouce</module>
@@ -23,8 +23,10 @@
         <module>demo-mahout</module>
         <module>demo-mybatis</module>
         <module>demo-rabbitmq</module>
+        <module>demo-rocketmq</module>
         <module>demo-mapstruct</module>
-        <module>demo-jackson</module><module>demo-jsqlparser</module>
+        <module>demo-jackson</module>
+        <module>demo-jsqlparser</module>
     </modules>
 
     <name>demo-all</name>
