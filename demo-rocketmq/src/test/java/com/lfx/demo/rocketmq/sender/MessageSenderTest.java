@@ -31,6 +31,6 @@ public class MessageSenderTest extends AbstractSpringTest {
         userMessage.setId((int) System.currentTimeMillis());
         Message<UserMessage> message = MessageBuilder.withPayload(userMessage).setHeader(MessageConst.PROPERTY_KEYS, msgId).build();
         rocketMQTemplate.send(TopicEnum.DEMO_TOPIC.getTopic(), message);
-        Thread.sleep(20000);
+        Thread.sleep(10000);
     }
 }
