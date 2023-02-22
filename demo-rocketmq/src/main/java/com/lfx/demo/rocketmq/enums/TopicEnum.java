@@ -24,6 +24,9 @@ public enum TopicEnum {
     static {
         for (TopicEnum item : values()) {
             Map<String, TopicEnum> tagsMap = CACHE_MAP.computeIfAbsent(item.getTopic(), k -> new HashMap<>());
+            if (tagsMap.containsKey(item.getTags())) {
+                throw new RuntimeException("TopicEnum exist repeat topic and tags!");
+            }
             tagsMap.put(item.getTags(), item);
             DESTINATION_MAP.put(item, item.buildDestination());
         }
