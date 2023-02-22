@@ -26,11 +26,11 @@ public class MessageSenderTest extends AbstractSpringTest {
 
     @Test
     public void simpleSendTest() throws InterruptedException {
-        Long msgId = System.currentTimeMillis();
+        Long bizId = System.currentTimeMillis();
         UserMessage userMessage = new UserMessage();
         userMessage.setId((int) System.currentTimeMillis());
-        Message<UserMessage> message = MessageBuilder.withPayload(userMessage).setHeader(MessageConst.PROPERTY_KEYS, msgId).build();
-        rocketMQTemplate.send(TopicEnum.DEMO_TOPIC.getTopic(), message);
+        Message<UserMessage> message = MessageBuilder.withPayload(userMessage).setHeader(MessageConst.PROPERTY_KEYS, bizId).build();
+        rocketMQTemplate.send(TopicEnum.DEMO_TOPIC.getDestination(), message);
         Thread.sleep(10000);
     }
 }
