@@ -2,6 +2,10 @@ package com.lfx.demo.rocketmq.message;
 
 import lombok.Data;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -10,5 +14,17 @@ import java.io.Serializable;
 @Data
 public class UserMessage implements Serializable {
 
+    @NotNull
+    @Min(0)
     private Integer id;
+
+    @Valid
+    private DetailMessage detailMessage;
+
+    @Data
+    public static class DetailMessage {
+
+        @NotBlank
+        private String info;
+    }
 }

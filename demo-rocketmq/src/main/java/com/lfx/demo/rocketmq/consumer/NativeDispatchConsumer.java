@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lfx.demo.rocketmq.constant.AppConstant;
 import com.lfx.demo.rocketmq.enums.TopicEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -17,16 +18,18 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -34,7 +37,6 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-@ConditionalOnMissingBean(DispatchConsumer.class)
 @RocketMQMessageListener(topic = "${rocketmq.consumer.topic:}", consumerGroup = "${rocketmq.consumer.group:}")
 public class NativeDispatchConsumer implements RocketMQListener<MessageExt>, RocketMQPushConsumerLifecycleListener, MessageListenerConcurrently,
         InitializingBean, ApplicationContextAware {
@@ -49,7 +51,10 @@ public class NativeDispatchConsumer implements RocketMQListener<MessageExt>, Roc
     private ObjectMapper objectMapper;
     private ApplicationContext applicationContext;
 
-    private Map<TopicEnum, MessageHandler<? super Serializable>> handlerMap;
+    private Map<TopicEnum, NativeMessageHandler<? super Serializable>> handlerMap;
+
+    @Autowired
+    private Validator validator;
 
     @Override
     public void onMessage(MessageExt messageExt) {
@@ -58,19 +63,22 @@ public class NativeDispatchConsumer implements RocketMQListener<MessageExt>, Roc
 
     @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> messageExtList, ConsumeConcurrentlyContext context) {
-        ConsumeConcurrentlyStatus result = null;
         for (MessageExt messageExt : messageExtList) {
             try {
-                ConsumeConcurrentlyStatus consumeResult = doConsumeMessage(messageExt, context);
-                if (result == null || result == ConsumeConcurrentlyStatus.CONSUME_SUCCESS) {
-                    result = consumeResult;
+                long now = System.currentTimeMillis();
+                ConsumeConcurrentlyStatus consumeStatus = doConsumeMessage(messageExt, context);
+                if (log.isDebugEnabled()) {
+                    log.debug("consume {} cost: {} ms", messageExt.getMsgId(), System.currentTimeMillis() - now);
+                }
+                if (consumeStatus == ConsumeConcurrentlyStatus.RECONSUME_LATER) {
+                    return consumeStatus;
                 }
             } catch (Exception e) {
-                log.warn("consume message failed. reConsumeTimes:{}", messageExt.getReconsumeTimes(), e);
-                result = ConsumeConcurrentlyStatus.RECONSUME_LATER;
+                log.warn("consume message failed. reConsumeTimes: {}", messageExt.getReconsumeTimes(), e);
+                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
             }
         }
-        return result != null ? result : ConsumeConcurrentlyStatus.RECONSUME_LATER;
+        return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
     }
 
     @Override
@@ -88,14 +96,14 @@ public class NativeDispatchConsumer implements RocketMQListener<MessageExt>, Roc
     @Override
     public void afterPropertiesSet() throws Exception {
         //noinspection rawtypes
-        Map<String, MessageHandler> handlerBeanMap = applicationContext.getBeansOfType(MessageHandler.class);
+        Map<String, NativeMessageHandler> handlerBeanMap = applicationContext.getBeansOfType(NativeMessageHandler.class);
         if (handlerBeanMap.isEmpty()) {
             handlerMap = Collections.emptyMap();
             log.warn("rocketmq消息处理器为空!");
             return;
         }
         //noinspection unchecked
-        handlerMap = handlerBeanMap.values().stream().collect(Collectors.toMap(MessageHandler::getTopic, v -> v));
+        handlerMap = handlerBeanMap.values().stream().collect(Collectors.toMap(NativeMessageHandler::getTopic, v -> v));
     }
 
     @SuppressWarnings("NullableProblems")
@@ -105,22 +113,31 @@ public class NativeDispatchConsumer implements RocketMQListener<MessageExt>, Roc
     }
 
     private ConsumeConcurrentlyStatus doConsumeMessage(MessageExt messageExt, ConsumeConcurrentlyContext context) throws IOException {
-        // 这里改为分布式id
+        // todo 这里改为分布式id
         MDC.put(AppConstant.TRACE_ID_KEY, String.valueOf(System.currentTimeMillis()));
+        String body = new String(messageExt.getBody());
         if (log.isDebugEnabled()) {
-            log.info("received message,topic={},tags={},msgId={},times={}, body={}",
-                    messageExt.getTopic(), messageExt.getTags(), messageExt.getMsgId(), messageExt.getReconsumeTimes(), new String(messageExt.getBody()));
+            log.debug("received message,topic={},tags={},msgId={},times={},body={}",
+                    messageExt.getTopic(), messageExt.getTags(), messageExt.getMsgId(), messageExt.getReconsumeTimes(), body);
         } else {
-            log.info("received message,topic={},tags={},msgId={},times={}", messageExt.getTopic(), messageExt.getTags(), messageExt.getMsgId(), messageExt.getReconsumeTimes());
+            log.info("received message,msgId={},times={}", messageExt.getMsgId(), messageExt.getReconsumeTimes());
         }
         TopicEnum topicEnum = TopicEnum.getInstance(messageExt.getTopic(), messageExt.getTags());
         if (topicEnum == null) {
-            log.warn("no message handler match!body={}", new String(messageExt.getBody()));
-            // 本批次先消费的消费异常不要影响后消费的消息，尽量保证影响面小
+            log.warn("no message handler match!body={}", body);
             return ConsumeConcurrentlyStatus.RECONSUME_LATER;
         }
-        MessageHandler<? super Serializable> handler = handlerMap.get(topicEnum);
-        handler.process(objectMapper.readValue(messageExt.getBody(), handler.getDataType()));
-        return null;
+        NativeMessageHandler<? super Serializable> handler = handlerMap.get(topicEnum);
+        Serializable param = objectMapper.readValue(messageExt.getBody(), handler.getDataType());
+        if (validator.getConstraintsForClass(param.getClass()).isBeanConstrained()) {
+            Set<ConstraintViolation<Serializable>> noPassSet = validator.validate(param);
+            if (CollectionUtils.isNotEmpty(noPassSet)) {
+                ConstraintViolation<Serializable> noPass = noPassSet.iterator().next();
+                log.warn("消息校验失败!reason={},msgId={},body={}",
+                        (noPass.getPropertyPath() + noPass.getMessage()), messageExt.getMsgId(), body);
+                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+            }
+        }
+        return handler.process(param);
     }
 }

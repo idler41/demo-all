@@ -14,6 +14,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
  * @author <a href="mailto:idler41@163.con">linfuxin</a> created on 2023-02-14 11:44:16
  */
 @Slf4j
+@ConditionalOnMissingBean(NativeDispatchConsumer.class)
 @Component
 @RocketMQMessageListener(topic = "${rocketmq.consumer.topic:}", consumerGroup = "${rocketmq.consumer.group:}")
 public class DispatchConsumer implements RocketMQListener<MessageExt>, RocketMQPushConsumerLifecycleListener,
