@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class UserMessage implements Serializable {
 
     @NotNull
-    @Min(0)
+//    @Min(0)
     private Integer id;
 
     @Valid

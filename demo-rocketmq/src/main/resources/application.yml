@@ -9,14 +9,15 @@ rocketmq:
     retry-next-server: true
     retry-times-when-send-failed: 2
 
-  consumer:
-    group: demo-consumer-group
-    accessKey:
-    secretKey:
-    pullBatchSize: 64
-    topic: demo-topic
-    listeners:
-      demo-consumer-group.demo-topic: true
-    consumeThreadMin: 20
-    consumeThreadMax: 200
-
+  container:
+    consumer:
+      group: group-consumer-sync
+      accessKey:
+      secretKey:
+      pullBatchSize: 64
+      # rocketmq需要保证消费者分组下的所有消费者的消费行为、消费逻辑、负载策略等一致，整体运算逻辑比较复杂。因此，不建议在生产环境中通过频繁修改订阅关系来实现业务逻辑的变更
+      topic: data-sync
+      # 同一消费组内订阅关系必须一致，避免动态添加tags带来的订阅关系不一致性，这里接收所有tags
+      #    tags: generic || spec-type
+      consumeThreadMin: 20
+      consumeThreadMax: 200
