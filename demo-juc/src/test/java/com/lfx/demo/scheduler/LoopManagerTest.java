@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="mailto:idler41@163.con">linfuxin</a> created on 2023-03-31 10:52:16
@@ -22,37 +22,27 @@ import java.util.concurrent.ThreadLocalRandom;
 public class LoopManagerTest extends AbstractSpringTest {
 
     @Autowired
-    private LoopManager loopManager;
+    private QueryScheduler loopManager;
 
 
     @BeforeClass
     public static void setup() {
         initSysProperty();
-        System.setProperty("logging.level.com.lfx.demo", "debug");
+//        System.setProperty("logging.level.com.lfx.demo", "debug");
     }
 
     @Test
     public void run() throws InterruptedException {
-        int dataSize = 50;
-        int threadSize = 5;
+        int dataSize = 200;
 
-        ExecutorService executorService = Executors.newFixedThreadPool(threadSize);
-        CountDownLatch latch = new CountDownLatch(dataSize);
         List<LoopContext> data = buildData(dataSize);
         for (LoopContext item : data) {
             loopManager.addRequest(item);
-            executorService.execute(() -> {
-                try {
-                    System.out.println("获取结果=>" + item.getFuture().get());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    latch.countDown();
-                    System.out.println("latch=>" + latch.getCount());
-                }
-            });
         }
-        latch.await();
+        data.stream()
+                .map(LoopContext::getFuture)
+                .collect(Collectors.toList())
+                .forEach(i -> System.out.println("接收数据=>" + i.join()));
     }
 
     private List<LoopContext> buildData(int dataSize) {

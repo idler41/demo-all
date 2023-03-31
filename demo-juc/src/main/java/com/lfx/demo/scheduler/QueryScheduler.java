@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -19,34 +20,35 @@ import java.util.stream.Collectors;
  */
 @Component
 @Slf4j
-public class LoopManager {
+public class QueryScheduler {
 
     /**
-     * 为避免重复请求，key为String(参数拼接)
+     * key重复将导致部分线程不能唤醒
      */
-    private final ConcurrentHashMap<String, LoopContext> requestMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<LoopContext, CompletableFuture<Object>> requestMap = new ConcurrentHashMap<>();
 
     private final long expireTime = TimeUnit.MINUTES.toMillis(1);
 
     public void addRequest(LoopContext context) {
-        requestMap.put(context.getKey(), context);
+        requestMap.put(context, context.getFuture());
     }
 
     @Scheduled(fixedRateString = "${loop.fixedRate:100}")
     public void run() {
         // 删除过期请求
         long now = System.currentTimeMillis();
-        Set<LoopContext> expireContexts = requestMap.values().stream()
+        Set<LoopContext> expireContexts = requestMap.keySet().stream()
                 .filter(i -> now - i.getRequestTime() > expireTime)
                 .collect(Collectors.toSet());
         for (LoopContext ctx : expireContexts) {
-            requestMap.remove(ctx.getKey());
+            requestMap.get(ctx).complete(null);
+            requestMap.remove(ctx);
         }
 
         // 执行请求业务
-        Map<String, ?> dbDataMap = mockQuery(requestMap.values());
-        for (String key : dbDataMap.keySet()) {
-            requestMap.get(key).getFuture().complete(dbDataMap.get(key));
+        Map<LoopContext, Object> dbDataMap = mockQuery(requestMap.keySet());
+        for (LoopContext key : dbDataMap.keySet()) {
+            requestMap.get(key).complete(dbDataMap.get(key));
             requestMap.remove(key);
         }
 
@@ -55,14 +57,14 @@ public class LoopManager {
         }
     }
 
-    private Map<String, String> mockQuery(Collection<LoopContext> contexts) {
-        Map<String, String> result = new HashMap<>(contexts.size());
+    private Map<LoopContext, Object> mockQuery(Collection<LoopContext> contexts) {
+        Map<LoopContext, Object> result = new HashMap<>(contexts.size());
         for (LoopContext ctx : contexts) {
             boolean success = ThreadLocalRandom.current().nextInt(4) == 2;
             if (success) {
-                result.put(ctx.getKey(), String.valueOf(System.currentTimeMillis()));
+                result.put(ctx, System.nanoTime());
+                log.info("db查询数据:key={},result={}", ctx.getKey(), result.get(ctx));
             }
-            log.info("db查询数据:key={},result={}", ctx.getKey(), success);
         }
         // 模拟查询结果
         return result;
