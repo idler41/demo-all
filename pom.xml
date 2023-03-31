@@ -26,7 +26,7 @@
         <module>demo-rocketmq</module>
         <module>demo-mapstruct</module>
         <module>demo-jackson</module>
-        <module>demo-jsqlparser</module>
+        <module>demo-jsqlparser</module><module>demo-juc</module>
     </modules>
 
     <name>demo-all</name>
